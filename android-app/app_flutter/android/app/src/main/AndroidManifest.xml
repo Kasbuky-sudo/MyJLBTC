@@ -52,6 +52,17 @@
         <!-- 课程表桌面卡片（原版鸿蒙 formability 的 Android 对应物）
              按小米小组件规范给三种尺寸：2×2 / 4×2 / 4×4，各一个 Provider -->
         <receiver
+            android:name=".BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
             android:name=".ScheduleWidgetProvider"
             android:exported="false"
             android:label="@string/widget_label">

@@ -20,9 +20,14 @@ data class WidgetCourse(
     val teacher: String,
     val place: String,
     val weeks: List<Int>,
+    /** 直接给时刻（分钟）—— 自测的"模拟课程"不在作息表上，用它覆盖大节换算 */
+    val minutesOverride: Pair<Int, Int>? = null,
+    /** 直接给时间文案（`12:48 - 12:58`），同上 */
+    val timeTextOverride: String? = null,
 ) {
     /** 大节号 → 该课的 [开始分钟, 结束分钟]；解析不出来返回 null */
     fun minutes(periodTimes: List<String>): Pair<Int, Int>? {
+        minutesOverride?.let { return it }
         if (start < 1 || start > periodTimes.size) return null
         val text = periodTimes[start - 1]
         val parts = text.split(" - ")
@@ -38,13 +43,14 @@ data class WidgetCourse(
     val lastSmall: Int get() = end * 2
 }
 
-class WidgetSnapshot(
+data class WidgetSnapshot(
     val updatedAt: Long,
     val term: String,
     val week: Int,
     val periodTimes: List<String>,
     val courses: List<WidgetCourse>,
 ) {
+
     val hasData: Boolean get() = updatedAt > 0L
 
     /** 某天该上的课（按当前教学周过滤 + 按大节排序） */
@@ -61,12 +67,14 @@ class WidgetSnapshot(
         week <= 0 || course.weeks.isEmpty() || course.weeks.contains(week)
 
     /** 该课的上课时间段文案（大节口径，如 `08:20 - 10:00`）；取不到返回空串 */
-    fun timeText(course: WidgetCourse): String =
-        if (course.start >= 1 && course.start <= periodTimes.size) {
+    fun timeText(course: WidgetCourse): String {
+        course.timeTextOverride?.let { return it }
+        return if (course.start >= 1 && course.start <= periodTimes.size) {
             periodTimes[course.start - 1]
         } else {
             ""
         }
+    }
 
     /** 该课的起 / 止时刻（`08:20` / `10:00`）；取不到返回空串 */
     fun clockOf(course: WidgetCourse): Pair<String, String> {
@@ -74,6 +82,12 @@ class WidgetSnapshot(
         val parts = text.split(" - ")
         return if (parts.size == 2) parts[0] to parts[1] else "" to ""
     }
+}
+
+/** 某个绝对时刻的"当天第几分钟" */
+private fun minutesOfDay(at: Long): Int {
+    val cal = java.util.Calendar.getInstance().apply { timeInMillis = at }
+    return cal.get(java.util.Calendar.HOUR_OF_DAY) * 60 + cal.get(java.util.Calendar.MINUTE)
 }
 
 /** `08:20` → 500（分钟）；解析不出来返回 -1 */
@@ -100,10 +114,50 @@ object WidgetData {
         if (!file.exists()) {
             null
         } else {
-            parse(JSONObject(file.readText()))
+            withSimulation(context, parse(JSONObject(file.readText())))
         }
     } catch (e: Exception) {
         null
+    }
+
+    /**
+     * 把设置页「模拟上课」塞进来的那节课也当成今天的一门课。
+     *
+     * 卡片和提醒读的是两份数据（卡片读快照、提醒读状态机），自测时两边都该看得见这节"课"，
+     * 用户按一下按钮就能同时验证通知和卡片（卡片的到点重画也是靠它才验得出来）。
+     */
+    private fun withSimulation(context: Context, snap: WidgetSnapshot): WidgetSnapshot {
+        val raw = Settings.simulatedSlot(context) ?: return snap
+        val sim = try {
+            JSONObject(raw)
+        } catch (e: Exception) {
+            return snap
+        }
+        val startAt = sim.optLong("startAt", 0L)
+        val endAt = sim.optLong("endAt", 0L)
+        val now = System.currentTimeMillis()
+        if (endAt <= 0L || now > endAt + 5 * 60_000L) return snap
+        // 落在哪个大节：先看"现在"处在作息表的哪一段，取不到就按第 1 大节
+        val nowMinutes = nowMinutes()
+        val period = snap.periodTimes.indexOfFirst { text ->
+            val parts = text.split(" - ")
+            if (parts.size != 2) return@indexOfFirst false
+            val from = toMinutes(parts[0])
+            val to = toMinutes(parts[1])
+            from >= 0 && to >= 0 && nowMinutes >= from && nowMinutes <= to
+        }.let { if (it >= 0) it + 1 else 1 }
+        val course = WidgetCourse(
+            weekday = todayWeekday(),
+            start = period,
+            end = period,
+            name = sim.optString("name").ifEmpty { "模拟课程（自测）" },
+            teacher = sim.optString("teacher"),
+            place = sim.optString("place"),
+            weeks = emptyList(), // 不过滤周次
+            minutesOverride = minutesOfDay(startAt) to minutesOfDay(endAt),
+            timeTextOverride = sim.optString("timeText"),
+        )
+        return snap.copy(courses = snap.courses + course)
     }
 
     private fun parse(json: JSONObject): WidgetSnapshot {

@@ -91,6 +91,8 @@ object ClassReminder {
         val wakeAt: Long?,
         /** 进度节拍唤醒时刻：提醒挂着时每分钟一次，让进度条动起来 */
         val tickAt: Long?,
+        /** 桌面卡片的下一个"内容变化点"（某节课开始 / 结束、跨天）：到点重画卡片 */
+        val widgetAt: Long?,
     )
 
     // ---------------- 对外 ----------------
@@ -155,8 +157,10 @@ object ClassReminder {
                     }
                 }
             }
-            // 节点闹钟与进度节拍取更早的那个（同一颗 PendingIntent，后设的顶掉前一个）
-            scheduleWake(context, earliestWake(plan.wakeAt, tick))
+            // 顺手让桌面卡片按"现在"重画一次（内容没变它会自己跳过）
+            ScheduleWidgetProvider.refresh(context)
+            // 节点闹钟 / 进度节拍 / 卡片内容变化点，取最早的那个（同一颗 PendingIntent）
+            scheduleWake(context, earliestWake(plan.wakeAt, tick, plan.widgetAt))
         } catch (e: Exception) {
             Log.w(TAG, "refresh failed: ${e.message}")
         }
@@ -345,25 +349,44 @@ object ClassReminder {
         val nowMin = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)
         val tick = nextTick(System.currentTimeMillis())
 
+        val widgetAt = widgetBoundary(slots)
+
         val ongoing = slots.firstOrNull { nowMin >= it.startMin && nowMin <= it.endMin }
         if (ongoing != null) {
             val total = (ongoing.endMin - ongoing.startMin).coerceAtLeast(1)
             val done = (nowMin - ongoing.startMin).coerceIn(0, total)
-            return Plan(State.ONGOING, ongoing, done, total, ongoing.endAt, tick)
+            return Plan(State.ONGOING, ongoing, done, total, ongoing.endAt, tick, widgetAt)
         }
 
         val upcoming = slots.firstOrNull { nowMin < it.startMin }
         if (upcoming != null && upcoming.startMin - nowMin <= LEAD_MINUTES) {
             val total = LEAD_MINUTES
             val left = (upcoming.startMin - nowMin).coerceIn(0, LEAD_MINUTES)
-            return Plan(State.SOON, upcoming, total - left, total, upcoming.startAt, tick)
+            return Plan(State.SOON, upcoming, total - left, total, upcoming.startAt, tick, widgetAt)
         }
 
         // 还没到提醒窗口：在「下一节课前 15 分钟」醒来（今天没有课就安排在明天第一节前）；
         // 没通知挂着就不需要节拍
         val soonAtToday = upcoming?.let { it.startAt - LEAD_MINUTES * 60_000L }
         val wake = soonAtToday ?: firstSlotTomorrowAt(payload, week, times)
-        return Plan(State.NONE, null, 0, 0, wake, null)
+        return Plan(State.NONE, null, 0, 0, wake, null, widgetAt)
+    }
+
+    /**
+     * 桌面卡片的下一个内容变化点：今天还没到的开课/下课时刻里最早的那个；
+     * 一个都没有（今天没课了）就安排在明天 00:05 —— 跨天后卡片上的星期/课程要换。
+     */
+    private fun widgetBoundary(slots: List<Slot>): Long? {
+        val now = System.currentTimeMillis()
+        val today = slots.flatMap { listOf(it.startAt, it.endAt) }.filter { it > now }.minOrNull()
+        val tomorrow = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_MONTH, 1)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 5)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+        return today?.let { minOf(it, tomorrow) } ?: tomorrow
     }
 
     // ---------------- 自测用「模拟课程」 ----------------
@@ -654,6 +677,28 @@ object ClassReminder {
         (0 until length()).mapNotNull { optString(it, "").takeIf { s -> s.isNotEmpty() } }
 
     private fun JSONArray.toIntList(): List<Int> = (0 until length()).map { optInt(it, 0) }
+}
+
+/**
+ * 开机 / 本应用被更新后重排一次。
+ *
+ * 系统在重启与应用被替换时都会清掉已排的闹钟（之前"卡片一直停在旧内容"就踩过这个），
+ * 这里补上：上课提醒的下一次唤醒 + 卡片按当前时间重画一次。
+ */
+class BootReceiver : android.content.BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val action = intent.action ?: return
+        if (action != Intent.ACTION_BOOT_COMPLETED &&
+            action != Intent.ACTION_MY_PACKAGE_REPLACED &&
+            action != Intent.ACTION_TIME_CHANGED &&
+            action != Intent.ACTION_TIMEZONE_CHANGED
+        ) {
+            return
+        }
+        Log.i("MyJLBTC-Reminder", "收到 $action：重排提醒与卡片")
+        ClassReminder.refresh(context)
+        ScheduleWidgetProvider.refresh(context, force = true)
+    }
 }
 
 /** 闹钟到点 / 用户划掉通知：都走这里 */

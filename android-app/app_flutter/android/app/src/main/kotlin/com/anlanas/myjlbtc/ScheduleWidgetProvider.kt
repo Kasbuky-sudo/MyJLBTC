@@ -53,13 +53,35 @@ class ScheduleWidgetProvider : BaseScheduleWidgetProvider(WidgetMode.FULL) {
         const val TAG = "MyJLBTC-Widget"
         const val ACTION_PINNED = "com.anlanas.myjlbtc.WIDGET_PINNED"
 
-        /** 四种卡片一起刷（App 写完数据后调它） */
-        fun refresh(context: Context) {
+        /** 上一次画的内容指纹（状态没变就不重画：闹钟每分钟醒一次，但卡片只在"真变了"时重画） */
+        private const val PREF_KEY = "widget_last_key"
+
+        /**
+         * 四种卡片一起刷。
+         *
+         * `force = false`（闹钟/应用内触点）时会先比对内容指纹：一样就跳过 ——
+         * 免得每分钟一次的提醒节拍把四张卡片（含周视图那张位图）反复重画。
+         */
+        fun refresh(context: Context, force: Boolean = false) {
+            val snapshot = WidgetData.read(context)
+            val key = WidgetRenderer.contentKey(snapshot)
+            if (!force) {
+                val last = context.getSharedPreferences("myjlbtc_widget", Context.MODE_PRIVATE)
+                    .getString(PREF_KEY, null)
+                if (last == key) return
+            }
+            context.getSharedPreferences("myjlbtc_widget", Context.MODE_PRIVATE)
+                .edit().putString(PREF_KEY, key).apply()
             val manager = AppWidgetManager.getInstance(context)
+            var rendered = 0
             for ((cls, mode) in PROVIDERS) {
                 val ids = manager.getAppWidgetIds(ComponentName(context, cls))
-                for (id in ids) manager.updateAppWidget(id, WidgetRenderer.build(context, mode, id))
+                for (id in ids) {
+                    manager.updateAppWidget(id, WidgetRenderer.build(context, mode, id))
+                    rendered++
+                }
             }
+            Log.i(TAG, "重画卡片 $rendered 张（key=$key force=$force）")
         }
 
         val PROVIDERS = listOf(
@@ -79,6 +101,7 @@ abstract class BaseScheduleWidgetProvider(private val mode: WidgetMode) : AppWid
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray,
     ) {
+        // 系统 30 分钟的周期更新（各 ROM 都可能省电推迟）：强制按当前时间重画一次
         for (id in appWidgetIds) {
             appWidgetManager.updateAppWidget(id, WidgetRenderer.build(context, mode, id))
         }
@@ -109,6 +132,27 @@ object WidgetRenderer {
 
     /** 周视图位图的像素上限（约 400 万像素 / 16MB ARGB，正常 4×4 手机上不会被触发） */
     private const val MAX_BITMAP_PIXELS = 4_000_000.0
+
+    /**
+     * 卡片内容指纹：只跟"现在该显示什么"有关，跟具体版式无关。
+     * 指纹没变说明四张卡片重画也不会变 —— 让提醒的每分钟节拍可以放心调用刷新。
+     */
+    fun contentKey(snapshot: WidgetSnapshot?): String {
+        val weekday = WidgetData.todayWeekday()
+        if (snapshot == null || !snapshot.hasData) return "nosync|$weekday"
+        val courses = snapshot.coursesOn(weekday)
+        if (courses.isEmpty()) return "empty|${snapshot.week}|$weekday"
+        val now = WidgetData.nowMinutes()
+        val timed = courses.map { it to it.minutes(snapshot.periodTimes) }
+        val ongoing = timed.firstOrNull { (_, span) -> span != null && now >= span.first && now <= span.second }?.first
+        val upcoming = timed.firstOrNull { (_, span) -> span != null && now < span.first }?.first
+        val state = when {
+            ongoing != null -> "ongoing:${ongoing.name}:${ongoing.start}"
+            upcoming != null -> "upcoming:${upcoming.name}:${upcoming.start}"
+            else -> "done" // 今天的课上完了：卡片清空，只有周次/星期/门数变化才需要重画
+        }
+        return "${snapshot.week}|$weekday|${courses.size}|$state"
+    }
 
     /** 一行课程的控件句柄（各行尾号 0-3；2×2 卡片只有第 0 行） */
     private class RowIds(val row: Int, val bar: Int, val name: Int, val meta: Int, val start: Int, val end: Int)
@@ -197,6 +241,15 @@ object WidgetRenderer {
         val timed = courses.map { it to it.minutes(data.periodTimes) }
         val ongoing = timed.firstOrNull { (_, span) -> span != null && now >= span.first && now <= span.second }?.first
         val upcoming = timed.firstOrNull { (_, span) -> span != null && now < span.first }?.first
+
+        // 今天的课都上完了：卡片清空（用户口径：课都上完了就让它"消失"，别留着最后一节）
+        if (ongoing == null && upcoming == null) {
+            views.setViewVisibility(R.id.widget_empty, View.VISIBLE)
+            views.setViewVisibility(R.id.widget_body, View.GONE)
+            views.setTextViewText(R.id.widget_empty_title, "今日已下课")
+            views.setTextViewText(R.id.widget_empty_tip, "课程都上完啦，休息一下")
+            return views
+        }
         // 4×4 列表放不下时，从"正在上 / 下节课"那节开始往后显示（不然重要信息被挤掉）
         val shown = if (courses.size > visible && ongoing != null) {
             courses.dropWhile { it !== ongoing }.take(visible)
@@ -205,8 +258,8 @@ object WidgetRenderer {
         }
 
         if (mode == WidgetMode.SMALL || mode == WidgetMode.FULL) {
-            // 单课卡：正在上 → 下节 → 今天第一节（都上完了就显示最后一节）
-            val focus = ongoing ?: upcoming ?: courses.last()
+            // 单课卡：正在上课 → 下节课（都上完的情况上面已经清空返回了）
+            val focus = ongoing ?: upcoming ?: return views
             // 角标 = 第几大节（WakeUp 卡片同款，就是一个数字）
             val badge = if (focus.start >= 1) "${focus.start}" else "—"
             views.setTextViewText(R.id.widget_badge, badge)

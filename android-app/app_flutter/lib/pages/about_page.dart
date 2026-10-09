@@ -8,11 +8,11 @@ import '../widgets/cards.dart';
 import '../widgets/sub_page.dart';
 
 /// 应用版本（与 pubspec version 保持一致）
-const String appVersion = '2.2.0';
+const String appVersion = '2.2.1';
 
 /// 关于页展示的版本文案：版本号 + 平台 + 构建日期（261008 = 2026-10-08），
 /// 对齐原版 `1.0.8.HarmonyOS.arkts.261007` 的口径。
-const String appDisplayVersion = '2.2.0.Android.flutter.261009';
+const String appDisplayVersion = '2.2.1.Android.flutter.261009';
 
 /// 关于：大 logo + 名称版本 + 信息行（版本号 / 开发者 / 检查更新 / 更新日志 /
 /// AI 辅助编程公示 / 用户协议 / 隐私政策）+ 版权。

@@ -2,7 +2,7 @@ name: myjlbtc
 description: "MyJLBTC 校园助手（Flutter 前端：Android / Windows 开发画板）"
 publish_to: 'none'
 
-version: 2.2.0+8
+version: 2.2.1+9
 
 environment:
   sdk: ^3.13.5
