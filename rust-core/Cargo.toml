@@ -1,0 +1,27 @@
+[workspace]
+resolver = "2"
+members = ["rust/core"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://example.invalid/myjlbtc"
+description = "MyJLBTC 校园助手共享核心（协议 / 数据 / 缓存）"
+
+[workspace.dependencies]
+async-trait = "0.1"
+base64 = "0.22"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std", "serde"] }
+log = "0.4"
+regex = "1"
+rsa = { version = "0.9", default-features = false, features = ["std", "pem"] }
+rand = "0.8"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+thiserror = "2"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time"] }
+
+# Windows 本地开发先关闭调试符号膨胀，加快迭代
+[profile.dev]
+debug = 1

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 由原版 AppScope 图标背景色而来（.dev/make_android_icons.py） -->
+    <color name="ic_launcher_background">#7030A0</color>
+    <!-- 启动窗口底色 = 应用页面底色（浅色），避免启动瞬间白闪 -->
+    <color name="launch_background">#F1F3F5</color>
+
+    <!-- 桌面卡片配色（与 Flutter 侧 AppColor.light 对齐） -->
+    <color name="widget_card">#FFFFFF</color>
+    <color name="widget_text_primary">#141518</color>
+    <color name="widget_text_secondary">#8A9099</color>
+    <color name="widget_accent">#7C3AED</color>
+    <color name="widget_accent_green">#22B14C</color>
+    <color name="widget_accent_soft">#F0E8FD</color>
+    <color name="widget_text_meta">#5B6067</color>
+    <!-- 课程四色轮转（紫 / 绿 / 橙 / 深紫，与 Flutter 侧 _coursePalette 对齐） -->
+    <color name="widget_course_1">#7C3AED</color>
+    <color name="widget_course_2">#22B14C</color>
+    <color name="widget_course_3">#FF9F0A</color>
+    <color name="widget_course_4">#6B2B9E</color>
+    <!-- 周视图网格线 -->
+    <color name="widget_grid_line">#1A000000</color>
+</resources>

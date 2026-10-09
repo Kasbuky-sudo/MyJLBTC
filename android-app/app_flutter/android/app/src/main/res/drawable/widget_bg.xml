@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 小组件卡片底：纯色（浅色白、深色近黑，随 values{,-night}/colors.xml 切） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/widget_card" />
+    <corners android:radius="20dp" />
+</shape>

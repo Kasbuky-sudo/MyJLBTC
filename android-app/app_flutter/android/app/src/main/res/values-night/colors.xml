@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色模式下页面底色是纯黑 -->
+    <color name="launch_background">#000000</color>
+
+    <!-- 桌面卡片配色（与 Flutter 侧 AppColor.dark 对齐） -->
+    <color name="widget_card">#1A1A1C</color>
+    <color name="widget_text_primary">#F5F6F7</color>
+    <color name="widget_text_secondary">#9096A0</color>
+    <color name="widget_accent">#A78BFA</color>
+    <color name="widget_accent_green">#2FC463</color>
+    <color name="widget_accent_soft">#2A2140</color>
+    <color name="widget_text_meta">#A8ADB4</color>
+    <!-- 深色下课程四色提亮（保证在近黑卡片上可读） -->
+    <color name="widget_course_1">#A78BFA</color>
+    <color name="widget_course_2">#2FC463</color>
+    <color name="widget_course_3">#FFB340</color>
+    <color name="widget_course_4">#B98BE0</color>
+    <color name="widget_grid_line">#26FFFFFF</color>
+</resources>

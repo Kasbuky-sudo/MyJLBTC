@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyJLBTC</string>
+    <string name="widget_label">今日课程 4×2</string>
+    <string name="widget_description">课表卡片：显示正在上的课或下节课</string>
+    <string name="widget_no_course">今日无课</string>
+    <string name="widget_no_course_tip">课程都结束啦，休息一下</string>
+    <string name="widget_not_synced">课表未同步</string>
+    <string name="widget_not_synced_tip">打开应用同步课表</string>
+    <string name="widget_ongoing">正在上课</string>
+    <string name="widget_upcoming">下节课</string>
+    <string name="widget_place">地点</string>
+    <string name="widget_teacher">教师</string>
+    <string name="widget_today_courses">今日课程</string>
+    <string name="widget_label_small">今日课程 2×2</string>
+    <string name="widget_label_list">今日课程 4×4</string>
+    <string name="widget_description_small">2×2 紧凑卡：下一节课的课名与地点</string>
+    <string name="widget_description_list">4×4 今日课程列表：按时间列出今天全部课程</string>
+    <string name="widget_label_week">周视图 4×4</string>
+    <string name="widget_description_week">4×4 周视图：整周课表网格（节次轴 + 7 天彩色课块）</string>
+    <string name="widget_today_weekday">周五</string>
+</resources>

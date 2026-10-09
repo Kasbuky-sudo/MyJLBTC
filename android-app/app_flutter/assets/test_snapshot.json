@@ -1,0 +1,553 @@
+{
+  "todayCourses": [
+    {
+      "name": "Java程序设计基础",
+      "teacher": "王老师",
+      "timeText": "08:20 - 10:00",
+      "place": "三教507"
+    },
+    {
+      "name": "数据结构",
+      "teacher": "李老师",
+      "timeText": "10:20 - 12:00",
+      "place": "三教402"
+    },
+    {
+      "name": "数据库原理与应用",
+      "teacher": "王老师",
+      "timeText": "15:20 - 16:50",
+      "place": "三教405"
+    }
+  ],
+  "weekCourses": [
+    {
+      "weekday": 1,
+      "startPeriod": 1,
+      "endPeriod": 1,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "Java程序设计基础",
+      "teacher": "王老师",
+      "place": "三教507",
+      "examForm": ""
+    },
+    {
+      "weekday": 1,
+      "startPeriod": 2,
+      "endPeriod": 2,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "数据结构",
+      "teacher": "李老师",
+      "place": "三教402",
+      "examForm": ""
+    },
+    {
+      "weekday": 1,
+      "startPeriod": 4,
+      "endPeriod": 4,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "数据库原理与应用",
+      "teacher": "王老师",
+      "place": "三教405",
+      "examForm": ""
+    },
+    {
+      "weekday": 2,
+      "startPeriod": 3,
+      "endPeriod": 3,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "Web前端开发",
+      "teacher": "赵老师",
+      "place": "三教301",
+      "examForm": ""
+    },
+    {
+      "weekday": 2,
+      "startPeriod": 5,
+      "endPeriod": 5,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "大学英语B2",
+      "teacher": "孙老师",
+      "place": "外语楼WJ203",
+      "examForm": ""
+    },
+    {
+      "weekday": 3,
+      "startPeriod": 1,
+      "endPeriod": 1,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "Java程序设计基础",
+      "teacher": "王老师",
+      "place": "三教507",
+      "examForm": ""
+    },
+    {
+      "weekday": 3,
+      "startPeriod": 2,
+      "endPeriod": 2,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "操作系统原理",
+      "teacher": "周老师",
+      "place": "三教402",
+      "examForm": ""
+    },
+    {
+      "weekday": 3,
+      "startPeriod": 4,
+      "endPeriod": 4,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "概率论与数理统计",
+      "teacher": "吴老师",
+      "place": "一教B203",
+      "examForm": ""
+    },
+    {
+      "weekday": 4,
+      "startPeriod": 4,
+      "endPeriod": 4,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "计算机网络技术",
+      "teacher": "郑老师",
+      "place": "一教B102",
+      "examForm": ""
+    },
+    {
+      "weekday": 5,
+      "startPeriod": 2,
+      "endPeriod": 2,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "name": "软件工程导论",
+      "teacher": "冯老师",
+      "place": "三教306",
+      "examForm": ""
+    }
+  ],
+  "scheduleMeta": {
+    "term": "2026-2027-1",
+    "week": 16,
+    "updatedAt": 1791103575032,
+    "count": 0
+  },
+  "scheduleUpdatedAt": 1797211800000,
+  "grades": [
+    {
+      "term": "2025-2026-1",
+      "code": "JSJ1001",
+      "name": "Java程序设计基础",
+      "grade": "87",
+      "credit": "4",
+      "gradePoint": "3.7",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-1",
+      "code": "JSJ1002",
+      "name": "计算机应用基础",
+      "grade": "优秀",
+      "credit": "2",
+      "gradePoint": "4.0",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-1",
+      "code": "JC1003",
+      "name": "高等数学（文科）",
+      "grade": "78",
+      "credit": "3",
+      "gradePoint": "3.0",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-1",
+      "code": "WG1004",
+      "name": "大学英语B1",
+      "grade": "82",
+      "credit": "3",
+      "gradePoint": "3.3",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-1",
+      "code": "TY1005",
+      "name": "体育B1",
+      "grade": "85",
+      "credit": "1",
+      "gradePoint": "3.5",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-1",
+      "code": "XS1006",
+      "name": "形势与政策B1",
+      "grade": "良好",
+      "credit": "0.25",
+      "gradePoint": "3.0",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-1",
+      "code": "XL1007",
+      "name": "心理健康教育",
+      "grade": "92",
+      "credit": "1",
+      "gradePoint": "4.2",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-1",
+      "code": "JG1008",
+      "name": "经济学基础",
+      "grade": "76",
+      "credit": "3",
+      "gradePoint": "2.6",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-2",
+      "code": "JSJ2001",
+      "name": "数据库原理与应用",
+      "grade": "90",
+      "credit": "4",
+      "gradePoint": "4.0",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-2",
+      "code": "JSJ2002",
+      "name": "Web前端开发",
+      "grade": "88",
+      "credit": "3",
+      "gradePoint": "3.7",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-2",
+      "code": "JSJ2003",
+      "name": "数据结构",
+      "grade": "81",
+      "credit": "4",
+      "gradePoint": "3.3",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-2",
+      "code": "WG2004",
+      "name": "大学英语B2",
+      "grade": "79",
+      "credit": "3",
+      "gradePoint": "3.0",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-2",
+      "code": "TY2005",
+      "name": "体育B2",
+      "grade": "良好",
+      "credit": "1",
+      "gradePoint": "2.0",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-2",
+      "code": "XS2006",
+      "name": "形势与政策B2",
+      "grade": "优秀",
+      "credit": "0.25",
+      "gradePoint": "4.0",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-2",
+      "code": "JG2007",
+      "name": "管理学基础",
+      "grade": "83",
+      "credit": "2",
+      "gradePoint": "3.3",
+      "tag": ""
+    },
+    {
+      "term": "2025-2026-2",
+      "code": "JG2008",
+      "name": "电子商务概论",
+      "grade": "及格",
+      "credit": "2",
+      "gradePoint": "1.0",
+      "tag": ""
+    }
+  ],
+  "exams": [
+    {
+      "term": "2026-2027-1",
+      "batch": "2026-2027-1期末考试",
+      "course": "操作系统原理",
+      "time": "2027-01-11 08:30~10:30",
+      "place": "第三教学楼 三教205",
+      "seat": "12",
+      "method": "考试"
+    },
+    {
+      "term": "2026-2027-1",
+      "batch": "2026-2027-1期末考试",
+      "course": "计算机网络技术",
+      "time": "2027-01-12 13:00~15:00",
+      "place": "第三教学楼 三教207",
+      "seat": "12",
+      "method": "考试"
+    },
+    {
+      "term": "2026-2027-1",
+      "batch": "2026-2027-1期末考试",
+      "course": "概率论与数理统计",
+      "time": "2027-01-14 08:30~10:00",
+      "place": "第一教学楼 一教B203",
+      "seat": "07",
+      "method": "考查"
+    }
+  ],
+  "notices": [
+    {
+      "id": "T1",
+      "title": "关于 2026-2027 学年第一学期期末考试安排的通知",
+      "author": "教务处",
+      "time": "12-20 10:00",
+      "readCount": 0,
+      "totalCount": 0,
+      "paragraphs": [
+        "各二级学院、全体同学：\n本学期期末考试将于第 18-19 教学周进行，具体考试时间、考场及座位号请登录教务系统「考试安排」查询。\n请同学们携带学生证按时参加考试，开考 15 分钟后不得入场。"
+      ],
+      "signature": "示例学院",
+      "likers": [],
+      "commentClosed": true
+    },
+    {
+      "id": "T2",
+      "title": "图书馆期末备考期间开放时间调整",
+      "author": "图书馆",
+      "time": "12-15 09:30",
+      "readCount": 0,
+      "totalCount": 0,
+      "paragraphs": [
+        "各位读者：\n期末备考期间，图书馆开放时间调整为 07:00 - 23:00，自习区 24 小时开放。\n请大家合理安排复习时间。"
+      ],
+      "signature": "示例学院",
+      "likers": [],
+      "commentClosed": true
+    },
+    {
+      "id": "T3",
+      "title": "寒假放假安排及注意事项",
+      "author": "学生工作处",
+      "time": "12-10 14:00",
+      "readCount": 0,
+      "totalCount": 0,
+      "paragraphs": [
+        "全体同学：\n寒假自 2027 年 1 月 17 日开始，2 月 26 日、27 日返校注册，2 月 28 日正式上课。\n离校前请关闭宿舍电源、锁好门窗，注意路途安全。"
+      ],
+      "signature": "示例学院",
+      "likers": [],
+      "commentClosed": true
+    }
+  ],
+  "profile": {
+    "name": "李明",
+    "studentId": "202411000000",
+    "college": "信息技术学院",
+    "major": "软件技术(专科)",
+    "className": "软件技术2401",
+    "sex": "男",
+    "nation": "汉族",
+    "birth": "2005-02-14",
+    "idCard": "110101200501010000",
+    "phone": "13800000000",
+    "email": null,
+    "qq": null,
+    "wechat": null,
+    "campus": "示例校区",
+    "duration": "3 年",
+    "enrollYear": "2024",
+    "status": "状态码—",
+    "classSize": "42 人",
+    "homeAddr": "吉林省长春市朝阳区测试路 88 号",
+    "homePhone": null,
+    "middleSchool": "长春市实验中学",
+    "examNo": "24220101110023",
+    "admissionNo": "202401102",
+    "graduateAt": "2027-07-01"
+  },
+  "stats": {
+    "credits": "87.25",
+    "courseCount": "16",
+    "requiredCredits": "134.00",
+    "refreshAt": 1797211800000
+  },
+  "dataEpoch": 1797211800000
+}

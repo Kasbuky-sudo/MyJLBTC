@@ -1,0 +1,39 @@
+name: myjlbtc
+description: "MyJLBTC 校园助手（Flutter 前端：Android / Windows 开发画板）"
+publish_to: 'none'
+
+version: 2.2.0+8
+
+environment:
+  sdk: ^3.13.5
+
+dependencies:
+  # MD3 动态取色（Android 12+ 莫奈变色；其它平台返回空，自动回落静态配色）
+  dynamic_color: ^1.7.0
+  ffi: ^2.2.0
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.2.0
+  liquid_glass_widgets: ^1.10.0
+  path_provider: ^2.1.6
+  share_plus: ^13.3.1
+  url_launcher: ^6.3.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    # 开发用假数据快照：由 rust/core 的 `cargo run --example mkdevdata` 生成
+    - assets/dev_snapshot.json
+    # 测试专用快照：由演示数据生成（固定时钟），保证测试稳定
+    - assets/test_snapshot.json
+    # 应用图标前景层（与原版 AppScope 的分层图标同源，关于页大 logo 用）
+    - assets/images/app_foreground.png
+    # AI 辅助编程公示用的模型 logo（与原版 entry/.../media 同源：盘古彩色 PNG，
+    # DeepSeek / GLM / Kimi 为单色 SVG，浅色 #1A1A1A、深色由 dark 目录的白色版渲染）
+    - assets/images/ai/

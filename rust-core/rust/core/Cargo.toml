@@ -1,0 +1,28 @@
+[package]
+name = "myjlbtc-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "MyJLBTC 校园助手共享核心：CAS 登录协议 / 教务数据同步 / 本地缓存（平台无关）"
+
+[dependencies]
+async-trait.workspace = true
+base64.workspace = true
+chrono.workspace = true
+log.workspace = true
+regex.workspace = true
+rsa.workspace = true
+rand.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+
+[dependencies.reqwest]
+version = "0.12"
+default-features = false
+features = ["rustls-tls", "charset", "http2", "gzip", "brotli", "deflate"]
+
+[dev-dependencies]
+env_logger = "0.11"
+tempfile = "3"

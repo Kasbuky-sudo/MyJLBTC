@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 今日课程卡片：头部右侧的节次角标（第几大节 / 今天几门课） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/widget_accent_soft" />
+    <corners android:radius="6dp" />
+</shape>
