@@ -582,10 +582,25 @@ class _IslandNote extends StatelessWidget {
 
   final AppStore store;
 
-  /// 各品牌已接入灵动岛的系统版本（用户 2026-10-08 提供，三星 One UI 8 后续补上）
+  /// 各品牌已接入灵动岛的系统版本（用户提供；三星 One UI 8、ColorOS 16 真机验证后下调门槛）
   static const String _adaptList =
-      '已接入灵动岛：OPPO / 一加 / realme（ColorOS 17）、小米 / 红米（HyperOS 3 起）、'
+      '已接入灵动岛：OPPO / 一加 / realme（ColorOS 16 起）、小米 / 红米（HyperOS 3 起）、'
       '荣耀（MagicOS 10）、三星（One UI 8）。';
+
+  /// 厂商侧的开关位置（不是应用能替你打开的，只能提示）——用户 2026-10-09 提供
+  static const Map<String, String> _vendorHints = {
+    'OPPO': 'ColorOS（OPPO / 一加 / realme）：到「设置 → 流体云」里打开实时通知，'
+        '通知栏才会显示进度条与"上岛"。',
+    '荣耀': 'MagicOS（荣耀）：到「设置 → 灵动胶囊」里打开，通知才会显示在胶囊上。',
+  };
+
+  /// 按本机品牌取厂商提示；没有对应厂商就不显示
+  static String? _hintFor(String brand) {
+    for (final entry in _vendorHints.entries) {
+      if (brand.contains(entry.key)) return entry.value;
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -650,6 +665,17 @@ class _IslandNote extends StatelessWidget {
               color: colors.textSecondary,
             ),
           ),
+          if (_hintFor(brand) != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              _hintFor(brand)!,
+              style: TextStyle(
+                fontSize: 11.5,
+                height: 1.6,
+                color: colors.textSecondary,
+              ),
+            ),
+          ],
         ],
       ),
     );

@@ -10,8 +10,9 @@ import android.util.Log
  * 它们都吃 AOSP 16 的 Live Updates（`Notification.ProgressStyle` + 推广常驻通知），
  * 但各家从哪个大版本开始接、以及三星的实现节奏不同，所以这里按品牌 + ROM 版本号给个结论。
  *
- * 已知接入情况（用户 2026-10-08 提供）：
- * - OPPO / 一加 / realme：ColorOS 17
+ * 已知接入情况：
+ * - OPPO / 一加 / realme：ColorOS 16（2026-10-09 真机验证：一加 PJE110 / ColorOS 16 上
+ *   `promotable=true`、通知栏能上岛；用户补充：需要到「设置 → 流体云」里打开实时通知）
  * - 小米 / 红米：HyperOS 3
  * - 荣耀：MagicOS 10
  * - 三星：One UI 8
@@ -78,10 +79,10 @@ object RomSupport {
             val majorVersion = major(coloros.ifEmpty { oplus })
             val verdict = when {
                 majorVersion == null -> Verdict.UNTESTED
-                majorVersion >= 17 -> Verdict.SUPPORTED
+                majorVersion >= 16 -> Verdict.SUPPORTED
                 else -> Verdict.LOW_VERSION
             }
-            return RomInfo("OPPO 系", "ColorOS", version, verdict, "ColorOS 17")
+            return RomInfo("OPPO 系", "ColorOS", version, verdict, "ColorOS 16")
         }
 
         // 荣耀：MagicOS 用 ro.build.version.magic

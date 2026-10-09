@@ -10,6 +10,11 @@ class ChangelogEntry {
 }
 
 const List<ChangelogEntry> changelog = [
+  ChangelogEntry('v2.2.2', '2026-10-09', [
+    '更新：灵动岛适配清单——OPPO / 一加 / realme 从 ColorOS 16 起就能上岛（一加真机验证）',
+    '新增：设置页按本机品牌提示厂商侧开关位置——ColorOS 到「设置 → 流体云」、'
+        'MagicOS 到「设置 → 灵动胶囊」打开实时通知，通知栏才会显示进度条与上岛效果',
+  ]),
   ChangelogEntry('v2.2.1', '2026-10-09', [
     '修复：桌面小部件不会自己更新——之前只有打开应用或系统每 30 分钟那一次才重画，'
         '部分系统会把这条周期更新压下（卡片就一直停在旧内容上）；'

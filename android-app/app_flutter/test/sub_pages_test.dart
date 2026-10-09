@@ -159,7 +159,7 @@ void main() {
     await tapAndSettle(tester, find.text('我的'));
     await tapAndSettle(tester, find.text('关于 MyJLBTC'));
 
-    expect(find.text('版本 2.2.1.Android.flutter.261009'), findsOneWidget);
+    expect(find.text('版本 2.2.2.Android.flutter.261009'), findsOneWidget);
     expect(find.text('应用市场托管'), findsOneWidget);
     expect(find.text('© 2026 MyJLBTC'), findsOneWidget);
 
@@ -172,9 +172,9 @@ void main() {
       ),
     );
     // 最新版默认展开，历史版本是收起的标题行
-    expect(find.text('v2.2.1'), findsOneWidget);
-    // 最新版默认展开：正文里能看到它自己的条目（周视图卡片是这一版最显眼的新增）
-    expect(find.textContaining('周视图'), findsOneWidget);
+    expect(find.text('v2.2.2'), findsOneWidget);
+    // 最新版默认展开：正文里能看到它自己的条目（跟着最新一条换）
+    expect(find.textContaining('流体云'), findsOneWidget);
     expect(find.text('v2.1.3'), findsOneWidget);
     expect(find.text('v2.1.2'), findsOneWidget);
     expect(find.text('v2.1.1'), findsOneWidget);
