@@ -81,7 +81,7 @@ export struct LoginPage {
     }
   }
 
-  /** 学号校验：学校学号是纯数字（本项目样例为 320524301000），这里只兜底位数 */
+  /** 学号校验：学校学号是纯数字（本项目样例为 202411000000），这里只兜底位数 */
   private isStudentIdValid(): boolean {
     return this.studentId.length >= 6;
   }
